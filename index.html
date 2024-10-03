@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Project Raptor</title>
+  <title>Secret Project Raptor (^o^)</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -29,17 +29,37 @@
   </style>
 </head>
 <body>
-  <h1>Secret Project Raptor(^o^)</h1>
+  <h1>Secret Project Raptor (^o^)</h1>
+
+  <!-- Encoding Section -->
   <textarea id="message" placeholder="Type your message here..."></textarea>
   <br>
   <button onclick="encodeMessage()">Encode Message</button>
   <p class="output" id="encoded-message"></p>
 
+  <!-- Decoding Section -->
+  <textarea id="encodedInput" placeholder="Paste your encoded message here..."></textarea>
+  <br>
+  <button onclick="decodeMessage()">Decode Message</button>
+  <p class="output" id="decoded-message"></p>
+
   <script>
+    // Encoding Function
     function encodeMessage() {
       const message = document.getElementById('message').value;
-      const encoded = btoa(message); // Simple Base64 encoding
+      const encoded = btoa(message); // Base64 encode the message
       document.getElementById('encoded-message').innerText = "Encoded: " + encoded;
+    }
+
+    // Decoding Function
+    function decodeMessage() {
+      const encodedMessage = document.getElementById('encodedInput').value;
+      try {
+        const decoded = atob(encodedMessage); // Base64 decode the message
+        document.getElementById('decoded-message').innerText = "Decoded: " + decoded;
+      } catch (e) {
+        document.getElementById('decoded-message').innerText = "Invalid encoded message!";
+      }
     }
   </script>
 </body>
