@@ -44,20 +44,34 @@
   <p class="output" id="decoded-message"></p>
 
   <script>
+    // UTF-8 compatible Base64 encode function
+    function base64Encode(str) {
+      return btoa(unescape(encodeURIComponent(str)));
+    }
+
+    // UTF-8 compatible Base64 decode function
+    function base64Decode(str) {
+      try {
+        return decodeURIComponent(escape(atob(str)));
+      } catch (e) {
+        return null; // Handle decoding errors
+      }
+    }
+
     // Encoding Function
     function encodeMessage() {
       const message = document.getElementById('message').value;
-      const encoded = btoa(unescape(encodeURIComponent(message))); // Ensure UTF-8 compatibility
+      const encoded = base64Encode(message);
       document.getElementById('encoded-message').innerText = "Encoded: " + encoded;
     }
 
     // Decoding Function
     function decodeMessage() {
       const encodedMessage = document.getElementById('encodedInput').value;
-      try {
-        const decoded = decodeURIComponent(escape(atob(encodedMessage))); // Handle UTF-8 decoding
+      const decoded = base64Decode(encodedMessage);
+      if (decoded !== null) {
         document.getElementById('decoded-message').innerText = "Decoded: " + decoded;
-      } catch (e) {
+      } else {
         document.getElementById('decoded-message').innerText = "Invalid encoded message!";
       }
     }
