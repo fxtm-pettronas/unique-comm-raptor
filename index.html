@@ -51,16 +51,23 @@
       document.getElementById('encoded-message').innerText = "Encoded: " + encoded;
     }
 
-    // Decoding Function
-    function decodeMessage() {
-      const encodedMessage = document.getElementById('encodedInput').value;
-      try {
-        const decoded = atob(encodedMessage); // Base64 decode the message
-        document.getElementById('decoded-message').innerText = "Decoded: " + decoded;
-      } catch (e) {
-        document.getElementById('decoded-message').innerText = "Invalid encoded message!";
-      }
+   <!-- Decoding Section -->
+<textarea id="encodedInput" placeholder="Paste your encoded message here..."></textarea>
+<br>
+<button onclick="decodeMessage()">Decode Message</button>
+<p class="output" id="decoded-message"></p>
+
+<script>
+  // Decoding Function
+  function decodeMessage() {
+    const encodedMessage = document.getElementById('encodedInput').value;
+    try {
+      const decoded = atob(encodedMessage); // Base64 decode the message
+      document.getElementById('decoded-message').innerText = "Decoded: " + decoded;
+    } catch (e) {
+      document.getElementById('decoded-message').innerText = "Invalid encoded message!";
     }
-  </script>
+  }
+</script>
 </body>
 </html>
