@@ -8,33 +8,34 @@
     body {
       font-family: Arial, sans-serif;
       margin: 0;
+      padding: 0;
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: black; /* Black color to fill the remaining space */
+      background-color: black;
     }
 
     .container {
       position: relative;
-      width: 700px;
-      height: 700px;
-      background-image: url('owl.jpg'); /* Owl image as background */
+      width: 80%;
+      max-width: 700px;
+      background-image: url('owl.jpg');
       background-size: cover;
       background-position: center;
       border: 2px solid #ffffff;
+      padding: 20px;
+      box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.5);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 20px;
-      box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.5); /* Futuristic glowing effect */
     }
 
     h1 {
       color: white;
       text-align: center;
       margin-bottom: 20px;
-      text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.6); /* Adding a futuristic text shadow */
+      text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.6);
     }
 
     .box {
@@ -47,27 +48,28 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      width: 45%;
     }
 
     textarea {
-      width: 200px;
+      width: 100%;
       height: 150px;
       background-color: rgba(255, 255, 255, 0.2);
-      border: 2px solid #0abde3; /* Futuristic blue border */
+      border: 2px solid #0abde3;
       color: white;
       padding: 10px;
       font-size: 16px;
       border-radius: 10px;
       resize: none;
-      box-shadow: 0 0 10px #0abde3; /* Glowing effect */
+      box-shadow: 0 0 10px #0abde3;
     }
 
     button {
       margin-top: 10px;
       padding: 10px 20px;
-      background-color: #0abde3; /* Futuristic blue color */
+      background-color: #0abde3;
       border: none;
-      border-radius: 10px;
+      border-radius: 30px;
       color: white;
       cursor: pointer;
       font-size: 16px;
@@ -76,7 +78,7 @@
     }
 
     button:hover {
-      transform: scale(1.1); /* Growing effect on hover */
+      transform: scale(1.1);
       box-shadow: 0 0 20px #0abde3;
     }
 
@@ -90,6 +92,44 @@
       font-size: 18px;
       border-radius: 10px;
       box-shadow: 0 0 10px #0abde3;
+      overflow-wrap: break-word;
+    }
+
+    /* Clipboard Button */
+    .clipboard-button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      background-color: #e74c3c;
+      border: none;
+      border-radius: 30px;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+      box-shadow: 0 0 10px #e74c3c;
+      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+
+    .clipboard-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px #e74c3c;
+    }
+
+    @media screen and (max-width: 768px) {
+      .container {
+        width: 90%;
+      }
+      .box {
+        flex-direction: column;
+        align-items: center;
+      }
+      .box div {
+        width: 100%;
+        margin-bottom: 20px;
+      }
+      .output-box {
+        height: auto;
+      }
     }
   </style>
 </head>
@@ -109,8 +149,9 @@
       </div>
     </div>
     <div class="output-box" id="output">
-      <p id="encoded-message">Output here...</p>
+      <p id="encoded-message"></p> <!-- Empty by default -->
     </div>
+    <button class="clipboard-button" onclick="copyToClipboard()">Clipboard</button> <!-- Clipboard Button -->
   </div>
 
   <script>
@@ -131,14 +172,26 @@
     function encodeMessage() {
       const message = document.getElementById('message').value;
       const encoded = base64Encode(message);
-      document.getElementById('encoded-message').innerText = "Encoded: " + encoded;
+      document.getElementById('encoded-message').innerText = encoded;
     }
 
     // Decoding function
     function decodeMessage() {
       const encodedMessage = document.getElementById('encodedInput').value;
       const decoded = base64Decode(encodedMessage);
-      document.getElementById('encoded-message').innerText = "Decoded: " + decoded;
+      document.getElementById('encoded-message').innerText = decoded;
+    }
+
+    // Clipboard function
+    function copyToClipboard() {
+      const outputText = document.getElementById('encoded-message').innerText;
+      if (outputText) {
+        navigator.clipboard.writeText(outputText)
+          .then(() => alert('Text copied to clipboard!'))
+          .catch(err => alert('Failed to copy text: ', err));
+      } else {
+        alert('No text to copy!');
+      }
     }
   </script>
 </body>
