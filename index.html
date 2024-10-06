@@ -7,76 +7,138 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      text-align: center;
-      background-image: url('owl.jpg');
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: black; /* Black color to fill the remaining space */
+    }
+
+    .container {
+      position: relative;
+      width: 700px;
+      height: 700px;
+      background-image: url('owl.jpg'); /* Owl image as background */
       background-size: cover;
-      background-repeat: no-repeat;
       background-position: center;
+      border: 2px solid #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       padding: 20px;
+      box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.5); /* Futuristic glowing effect */
     }
+
+    h1 {
+      color: white;
+      text-align: center;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.6); /* Adding a futuristic text shadow */
+    }
+
+    .box {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+    }
+
+    .box div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
     textarea {
-      width: 80%;
-      height: 100px;
+      width: 200px;
+      height: 150px;
+      background-color: rgba(255, 255, 255, 0.2);
+      border: 2px solid #0abde3; /* Futuristic blue border */
+      color: white;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 10px;
+      resize: none;
+      box-shadow: 0 0 10px #0abde3; /* Glowing effect */
     }
+
     button {
       margin-top: 10px;
       padding: 10px 20px;
-      background-color: #4CAF50;
-      color: white;
+      background-color: #0abde3; /* Futuristic blue color */
       border: none;
+      border-radius: 10px;
+      color: white;
       cursor: pointer;
+      font-size: 16px;
+      box-shadow: 0 0 10px #0abde3;
+      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
     }
-    .output {
-      margin-top: 20px;
+
+    button:hover {
+      transform: scale(1.1); /* Growing effect on hover */
+      box-shadow: 0 0 20px #0abde3;
+    }
+
+    .output-box {
+      width: 100%;
+      height: 100px;
+      background-color: rgba(255, 255, 255, 0.2);
+      border: 2px solid #0abde3;
+      color: white;
+      padding: 10px;
+      font-size: 18px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #0abde3;
     }
   </style>
 </head>
 <body>
-  <h1>Secret Project Raptor</h1>
-
-  <!-- Encoding Section -->
-  <textarea id="message" placeholder="Type your message here..."></textarea>
-  <br>
-  <button onclick="encodeMessage()">Encode Message</button>
-  <p class="output" id="encoded-message"></p>
-
-  <!-- Decoding Section -->
-  <textarea id="encodedInput" placeholder="Paste your encoded message here..."></textarea>
-  <br>
-  <button onclick="decodeMessage()">Decode Message</button>
-  <p class="output" id="decoded-message"></p>
+  <div class="container">
+    <h1>Secret Project Raptor</h1>
+    <div class="box">
+      <div>
+        <label style="color: white;">ENCODE</label>
+        <textarea id="message" placeholder="Type here..."></textarea>
+        <button onclick="encodeMessage()">COMPUTE</button>
+      </div>
+      <div>
+        <label style="color: white;">DECODE</label>
+        <textarea id="encodedInput" placeholder="Paste encoded message..."></textarea>
+        <button onclick="decodeMessage()">COMPUTE</button>
+      </div>
+    </div>
+    <div class="output-box" id="output">
+      <p id="encoded-message">Output here...</p>
+    </div>
+  </div>
 
   <script>
-    // UTF-8 compatible Base64 encode function
+    // Base64 Encoding and Decoding functions
     function base64Encode(str) {
       return btoa(unescape(encodeURIComponent(str)));
     }
 
-    // UTF-8 compatible Base64 decode function
     function base64Decode(str) {
       try {
         return decodeURIComponent(escape(atob(str)));
       } catch (e) {
-        return null; // Handle decoding errors
+        return "Invalid encoded message!";
       }
     }
 
-    // Encoding Function
+    // Encoding function
     function encodeMessage() {
       const message = document.getElementById('message').value;
       const encoded = base64Encode(message);
       document.getElementById('encoded-message').innerText = "Encoded: " + encoded;
     }
 
-    // Decoding Function
+    // Decoding function
     function decodeMessage() {
       const encodedMessage = document.getElementById('encodedInput').value;
       const decoded = base64Decode(encodedMessage);
-      if (decoded !== null) {
-        document.getElementById('decoded-message').innerText = "Decoded: " + decoded;
-      } else {
-        document.getElementById('decoded-message').innerText = "Invalid encoded message!";
-      }
+      document.getElementById('encoded-message').innerText = "Decoded: " + decoded;
     }
   </script>
 </body>
