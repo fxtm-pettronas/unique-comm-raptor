@@ -5,3 +5,5 @@ in case of collaborations feel free to sent requests..
 
 
 - I will put comment as hints to understand the functions
+- wuth the help of AI, changed from base64 to morse code
+- 
